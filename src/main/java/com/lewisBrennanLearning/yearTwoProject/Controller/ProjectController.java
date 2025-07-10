@@ -25,7 +25,7 @@ public class ProjectController {
 
     @PostMapping("/createAndWriteInitialData")
     @SuppressWarnings({"unchecked"})
-    public Map<String,Object> getRandomUser() throws JsonProcessingException {
+    public Map<String,Object> generateAndWriteRandomUser() throws JsonProcessingException {
         Map<String,Object> responseMap = restTemplateLocalDeclaration.getForObject(randomDataApiGet, Map.class);
         initialPayloadService.saveInitialPayload(responseMap);
         return responseMap;
