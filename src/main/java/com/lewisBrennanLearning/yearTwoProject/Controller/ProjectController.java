@@ -23,7 +23,7 @@ public class ProjectController {
     @Value("${project.randomDataApi.get}")
     private String randomDataApiGet;
 
-    @GetMapping("/get")
+    @PostMapping("/createAndWriteInitialData")
     @SuppressWarnings({"unchecked"})
     public Map<String,Object> getRandomUser() throws JsonProcessingException {
         Map<String,Object> responseMap = restTemplateLocalDeclaration.getForObject(randomDataApiGet, Map.class);
