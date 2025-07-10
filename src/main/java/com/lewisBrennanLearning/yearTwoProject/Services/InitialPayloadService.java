@@ -12,14 +12,15 @@ import java.util.Map;
 public class InitialPayloadService {
 
     private final InitialPayloadRepository initialPayloadRepository;
-    private final ObjectMapper json;
+    private final ObjectMapper objectMapperJSON;
+
     public InitialPayloadService(InitialPayloadRepository initialPayloadRepository) {
         this.initialPayloadRepository = initialPayloadRepository;
-        this.json = new ObjectMapper();
+        this.objectMapperJSON = new ObjectMapper();
     }
 
     public InitialPayload saveInitialPayload(Map<String, Object> initialPayloadMap) throws JsonProcessingException {
-        String jsonAsString = json.writeValueAsString(initialPayloadMap);
+        String jsonAsString = objectMapperJSON.writeValueAsString(initialPayloadMap);
         InitialPayload initialPayload = new InitialPayload();
         initialPayload.setInitialPayloadJsonString(jsonAsString);
         return initialPayloadRepository.save(initialPayload);
