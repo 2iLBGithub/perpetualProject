@@ -1,9 +1,9 @@
 package com.lewisBrennanLearning.yearTwoProject.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.lewisBrennanLearning.yearTwoProject.Services.InitialPayloadService;
+import com.lewisBrennanLearning.yearTwoProject.Model.InitialPayload;
+import com.lewisBrennanLearning.yearTwoProject.Services.PayloadService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -14,10 +14,10 @@ import java.util.Map;
 public class ProjectController {
 
     private final RestTemplate restTemplateLocalDeclaration;
-    private final InitialPayloadService initialPayloadService;
-    public ProjectController(RestTemplate restTemplateFromConfig, InitialPayloadService initialPayloadService) {
+    private final PayloadService payloadService;
+    public ProjectController(RestTemplate restTemplateFromConfig, PayloadService payloadService) {
         this.restTemplateLocalDeclaration = restTemplateFromConfig;
-        this.initialPayloadService = initialPayloadService;
+        this.payloadService = payloadService;
     }
 
     @Value("${project.randomDataApi.get}")
@@ -27,10 +27,19 @@ public class ProjectController {
     @SuppressWarnings({"unchecked"})
     public Map<String,Object> generateAndWriteRandomUser() throws JsonProcessingException {
         Map<String,Object> responseMap = restTemplateLocalDeclaration.getForObject(randomDataApiGet, Map.class);
-        initialPayloadService.saveInitialPayload(responseMap);
+        payloadService.saveInitialPayload(responseMap);
         return responseMap;
     }
 
     @PostMapping("/parseInitialDataMethodOne")
-    public String
+    public Map<String, Object> parseMethodOne() throws JsonProcessingException {
+        return payloadService.parseMethodOne();
+    }
+
+//    @PostMapping("/parseInitialDataMethodOne")
+//    public String simpleTest() {
+//        String thing = "thing";
+//        parsedPayloadService.saveParsedPayload(thing);
+//        return thing;
+//    }
 }

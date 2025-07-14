@@ -18,9 +18,7 @@ public class InitialPayload {
         this.initialPayloadJsonString = initialPayloadJsonString;
     }
 
-    public ObjectId getId() {
-        return id;
-    }
+    public ObjectId getId() {return id;}
 
     public void setId(ObjectId id) {
         this.id = id;
