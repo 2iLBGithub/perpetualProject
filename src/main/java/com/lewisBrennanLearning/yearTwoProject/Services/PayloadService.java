@@ -1,10 +1,13 @@
 package com.lewisBrennanLearning.yearTwoProject.Services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lewisBrennanLearning.yearTwoProject.Helper.HelperFunction;
 import com.lewisBrennanLearning.yearTwoProject.Model.InitialPayload;
+import com.lewisBrennanLearning.yearTwoProject.Model.ParsedPayload;
 import com.lewisBrennanLearning.yearTwoProject.Repository.InitialPayloadRepository;
+import com.lewisBrennanLearning.yearTwoProject.Repository.ParsedPayloadRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +17,13 @@ import java.util.Map;
 public class PayloadService {
 
     private final InitialPayloadRepository initialPayloadRepository;
+    private final ParsedPayloadRepository parsedPayloadRepository;
     private HelperFunction helperFunction;
     private final ObjectMapper objectMapperJSON;
 
-    public PayloadService(InitialPayloadRepository initialPayloadRepository, HelperFunction helperFunction) {
+    public PayloadService(InitialPayloadRepository initialPayloadRepository, ParsedPayloadRepository parsedPayloadRepository, HelperFunction helperFunction) {
         this.initialPayloadRepository = initialPayloadRepository;
+        this.parsedPayloadRepository = parsedPayloadRepository;
         this.helperFunction = helperFunction;
         this.objectMapperJSON = new ObjectMapper();
     }
@@ -30,10 +35,11 @@ public class PayloadService {
         return initialPayloadRepository.save(initialPayload);
     }
 
-    public Map<String, Object> parseMethodOne() throws JsonProcessingException {
+    public ParsedPayload parseMethodOne() throws JsonProcessingException {
         List<InitialPayload> allInitialPayloads = helperFunction.findAllInitialPayloads();
-        InitialPayload firstInitialPayload = allInitialPayloads.get(0);
-        Map<String, Object> reMappedFirstInitialPayload = helperFunction.reMapInitialPayloadStrings(firstInitialPayload);
-        return reMappedFirstInitialPayload;
+        InitialPayload selectedPayload = allInitialPayloads.get(0);
+        JsonNode jsonNodeSelectedPayload = helperFunction.jsonNodeInitialPayloadString(selectedPayload);
+        ParsedPayload parsedPayload = helperFunction.assignValues(jsonNodeSelectedPayload);
+        return parsedPayloadRepository.save(parsedPayload);
     }
 }

@@ -2,6 +2,7 @@ package com.lewisBrennanLearning.yearTwoProject.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lewisBrennanLearning.yearTwoProject.Model.InitialPayload;
+import com.lewisBrennanLearning.yearTwoProject.Model.ParsedPayload;
 import com.lewisBrennanLearning.yearTwoProject.Services.PayloadService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,10 +33,11 @@ public class ProjectController {
     }
 
     @PostMapping("/parseInitialDataMethodOne")
-    public Map<String, Object> parseMethodOne() throws JsonProcessingException {
+    public ParsedPayload parseMethodOne() throws JsonProcessingException {
         return payloadService.parseMethodOne();
     }
 
+//    Keep until MS3
 //    @PostMapping("/parseInitialDataMethodOne")
 //    public String simpleTest() {
 //        String thing = "thing";

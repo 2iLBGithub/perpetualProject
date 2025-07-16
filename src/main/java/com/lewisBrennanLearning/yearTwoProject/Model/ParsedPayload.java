@@ -16,19 +16,19 @@ public class ParsedPayload {
     private String gender;
     private String email;
     private String pictureUrl;
-    private String age;
+    private String dob;
     private String nationality;
 
     public ParsedPayload() {}
 
-    public ParsedPayload(ObjectId id, UUID uuid, String fullName, String gender, String email, String pictureUrl, String age, String nationality) {
+    public ParsedPayload(ObjectId id, UUID uuid, String fullName, String gender, String email, String pictureUrl, String dob, String nationality) {
         this.id = id;
         this.uuid = uuid;
         this.fullName = fullName;
         this.gender = gender;
         this.email = email;
         this.pictureUrl = pictureUrl;
-        this.age = age;
+        this.dob = dob;
         this.nationality = nationality;
     }
 
@@ -80,12 +80,12 @@ public class ParsedPayload {
         this.pictureUrl = pictureUrl;
     }
 
-    public String getAge() {
-        return age;
+    public String getDob() {
+        return dob;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public String getNationality() {
