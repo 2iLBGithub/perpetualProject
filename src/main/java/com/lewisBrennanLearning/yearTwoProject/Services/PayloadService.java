@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lewisBrennanLearning.yearTwoProject.Helper.HelperFunction;
+import com.lewisBrennanLearning.yearTwoProject.Interpreter.PayloadInterpreter;
 import com.lewisBrennanLearning.yearTwoProject.Model.InitialPayload;
 import com.lewisBrennanLearning.yearTwoProject.Model.ParsedPayload;
 import com.lewisBrennanLearning.yearTwoProject.Repository.InitialPayloadRepository;
@@ -18,13 +19,13 @@ public class PayloadService {
 
     private final InitialPayloadRepository initialPayloadRepository;
     private final ParsedPayloadRepository parsedPayloadRepository;
-    private HelperFunction helperFunction;
+    private final PayloadInterpreter payloadInterpreter;
     private final ObjectMapper objectMapperJSON;
 
-    public PayloadService(InitialPayloadRepository initialPayloadRepository, ParsedPayloadRepository parsedPayloadRepository, HelperFunction helperFunction) {
+    public PayloadService(InitialPayloadRepository initialPayloadRepository, ParsedPayloadRepository parsedPayloadRepository, PayloadInterpreter payloadInterpreter) {
         this.initialPayloadRepository = initialPayloadRepository;
         this.parsedPayloadRepository = parsedPayloadRepository;
-        this.helperFunction = helperFunction;
+        this.payloadInterpreter = payloadInterpreter;
         this.objectMapperJSON = new ObjectMapper();
     }
 
@@ -36,10 +37,11 @@ public class PayloadService {
     }
 
     public ParsedPayload parseMethodOne() throws JsonProcessingException {
-        List<InitialPayload> allInitialPayloads = helperFunction.findAllInitialPayloads();
+        List<InitialPayload> allInitialPayloads = payloadInterpreter.findAllInitialPayloads();
         InitialPayload selectedPayload = allInitialPayloads.get(0);
-        JsonNode jsonNodeSelectedPayload = helperFunction.jsonNodeInitialPayloadString(selectedPayload);
-        ParsedPayload parsedPayload = helperFunction.assignValues(jsonNodeSelectedPayload);
+        JsonNode jsonNodeSelectedPayload = payloadInterpreter.jsonNodeInitialPayloadString(selectedPayload);
+        ParsedPayload parsedPayload = new ParsedPayload();
+        parsedPayload = parsedPayload.assignValues(jsonNodeSelectedPayload);
         return parsedPayloadRepository.save(parsedPayload);
     }
 }

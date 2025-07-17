@@ -1,5 +1,7 @@
 package com.lewisBrennanLearning.yearTwoProject.Model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.lewisBrennanLearning.yearTwoProject.Helper.HelperFunction;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -95,4 +97,32 @@ public class ParsedPayload {
     public void setNationality(String nationality) {
         this.nationality = nationality;
     }
+
+//    Method One Functions
+
+    public ParsedPayload assignValues(JsonNode jsonNodeSelectedPayload) {
+        ParsedPayload assignedPayload = new ParsedPayload();
+        HelperFunction helperFunction = new HelperFunction();
+        assignedPayload.setUuid(UUID.fromString(jsonNodeSelectedPayload.path("results").get(0).path("login").get("uuid").asText()));
+        assignedPayload.setFullName(createFullName(jsonNodeSelectedPayload));
+        assignedPayload.setGender(jsonNodeSelectedPayload.path("results").get(0).get("gender").asText());
+        assignedPayload.setEmail(jsonNodeSelectedPayload.path("results").get(0).get("email").asText());
+        assignedPayload.setEmail(jsonNodeSelectedPayload.path("results").get(0).get("email").asText());
+        assignedPayload.setPictureUrl(jsonNodeSelectedPayload.path("results").get(0).get("picture").get("large").asText());
+        assignedPayload.setDob(jsonNodeSelectedPayload.path("results").get(0).get("dob").get("date").asText().substring(0,10));
+        assignedPayload.setNationality(helperFunction.translateIsoCode(jsonNodeSelectedPayload));
+        return assignedPayload;
+    }
+
+    public String createFullName(JsonNode jsonNodeSelectedPayload) {
+        JsonNode nameNode = jsonNodeSelectedPayload.path("results").get(0).path("name");
+        String title = nameNode.path("title").asText();
+        String first = nameNode.path("first").asText();
+        String last  = nameNode.path("last").asText();
+        return String.join(" ", title, first, last);
+    }
+
+// Method Two Functions
+//    Saved space for Get name via streaming model
+
 }
