@@ -25,7 +25,6 @@ public class PayloadInterpreter {
         return initialPayloadRepository.findAll();
     }
 
-
     //    Currently unused but useful for debug
     public Map<String,Object> reMapInitialPayloadString(InitialPayload firstInitialPayload) throws JsonProcessingException {
         return objectMapperJSON.readValue(firstInitialPayload.getInitialPayloadJsonString(), new TypeReference<Map<String,Object>>() {});
