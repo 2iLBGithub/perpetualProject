@@ -9,12 +9,9 @@ import java.util.Locale;
 @Component
 public class HelperFunction {
 
-    public String translateIsoCode(JsonNode jsonNodeSelectedPayload) {
-        String isoCode = jsonNodeSelectedPayload.path("results").get(0).get("nat").asText();
+    public String translateIsoCode(String isoCode) {
         Locale locale = new Locale("", isoCode);
         return locale.getDisplayCountry(Locale.ENGLISH);
     }
-
-
 
 }

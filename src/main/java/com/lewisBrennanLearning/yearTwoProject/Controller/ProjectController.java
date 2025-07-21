@@ -37,6 +37,11 @@ public class ProjectController {
         return payloadService.parseMethodOne();
     }
 
+    @PostMapping("/parseInitialDataMethodTwo")
+    public ParsedPayload parseMethodTwo() throws JsonProcessingException {
+        return payloadService.parseMethodTwo();
+    }
+
 //    Keep until MS3
 //    @PostMapping("/parseInitialDataMethodOne")
 //    public String simpleTest() {

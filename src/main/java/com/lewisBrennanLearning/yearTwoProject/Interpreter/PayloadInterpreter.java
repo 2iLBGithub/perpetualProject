@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lewisBrennanLearning.yearTwoProject.DataTransferObject.PayloadDataTransferObject;
 import com.lewisBrennanLearning.yearTwoProject.Model.InitialPayload;
 import com.lewisBrennanLearning.yearTwoProject.Repository.InitialPayloadRepository;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,11 @@ public class PayloadInterpreter {
         return initialPayloadRepository.findAll();
     }
 
+    public InitialPayload selectFirstPayload () {
+        List<InitialPayload> allInitialPayloads = findAllInitialPayloads();
+        return allInitialPayloads.get(0);
+    }
+
     //    Currently unused but useful for debug
     public Map<String,Object> reMapInitialPayloadString(InitialPayload firstInitialPayload) throws JsonProcessingException {
         return objectMapperJSON.readValue(firstInitialPayload.getInitialPayloadJsonString(), new TypeReference<Map<String,Object>>() {});
@@ -32,5 +38,13 @@ public class PayloadInterpreter {
 
     public JsonNode jsonNodeInitialPayloadString(InitialPayload firstInitialPayload) throws JsonProcessingException {
         return objectMapperJSON.readTree(firstInitialPayload.getInitialPayloadJsonString());
+    }
+
+    public PayloadDataTransferObject payloadDataTransferConversion (InitialPayload selectedPayload) throws JsonProcessingException {
+        Map<String,Object> mappedInitialPayload = reMapInitialPayloadString(selectedPayload);
+        List<Map<String,Object>> mappedInitialPayloadResults = (List<Map<String,Object>>) mappedInitialPayload.get("results");
+        Map<String,Object> thing = mappedInitialPayloadResults.get(0);
+        PayloadDataTransferObject payloadDataTransferObject = new PayloadDataTransferObject();
+        return payloadDataTransferObject = objectMapperJSON.convertValue(thing, PayloadDataTransferObject.class);
     }
 }

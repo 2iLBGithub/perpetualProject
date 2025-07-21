@@ -1,6 +1,7 @@
 package com.lewisBrennanLearning.yearTwoProject.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.lewisBrennanLearning.yearTwoProject.DataTransferObject.PayloadDataTransferObject;
 import com.lewisBrennanLearning.yearTwoProject.Helper.HelperFunction;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -100,21 +101,22 @@ public class ParsedPayload {
 
 //    Method One Functions
 
-    public ParsedPayload assignValues(JsonNode jsonNodeSelectedPayload) {
+    public ParsedPayload assignValuesJsonNode(JsonNode jsonNodeSelectedPayload) {
         ParsedPayload assignedPayload = new ParsedPayload();
         HelperFunction helperFunction = new HelperFunction();
         assignedPayload.setUuid(UUID.fromString(jsonNodeSelectedPayload.path("results").get(0).path("login").get("uuid").asText()));
-        assignedPayload.setFullName(createFullName(jsonNodeSelectedPayload));
+        assignedPayload.setFullName(createFullNameJsonNode(jsonNodeSelectedPayload));
         assignedPayload.setGender(jsonNodeSelectedPayload.path("results").get(0).get("gender").asText());
         assignedPayload.setEmail(jsonNodeSelectedPayload.path("results").get(0).get("email").asText());
         assignedPayload.setEmail(jsonNodeSelectedPayload.path("results").get(0).get("email").asText());
         assignedPayload.setPictureUrl(jsonNodeSelectedPayload.path("results").get(0).get("picture").get("large").asText());
         assignedPayload.setDob(jsonNodeSelectedPayload.path("results").get(0).get("dob").get("date").asText().substring(0,10));
-        assignedPayload.setNationality(helperFunction.translateIsoCode(jsonNodeSelectedPayload));
+        String isoCode = jsonNodeSelectedPayload.path("results").get(0).get("nat").asText();
+        assignedPayload.setNationality(helperFunction.translateIsoCode(isoCode));
         return assignedPayload;
     }
 
-    public String createFullName(JsonNode jsonNodeSelectedPayload) {
+    public String createFullNameJsonNode(JsonNode jsonNodeSelectedPayload) {
         JsonNode nameNode = jsonNodeSelectedPayload.path("results").get(0).path("name");
         String title = nameNode.path("title").asText();
         String first = nameNode.path("first").asText();
@@ -122,7 +124,29 @@ public class ParsedPayload {
         return String.join(" ", title, first, last);
     }
 
-// Method Two Functions
+//    Method Two functions
+    public ParsedPayload assignValuesDTO(PayloadDataTransferObject payloadDataTransferObject) {
+        ParsedPayload assignedPayload = new ParsedPayload();
+        HelperFunction helperFunction = new HelperFunction();
+        assignedPayload.setUuid((payloadDataTransferObject.getUuid()));
+        assignedPayload.setFullName(createFullNameDTO(payloadDataTransferObject));
+        assignedPayload.setGender(payloadDataTransferObject.getGender());
+        assignedPayload.setEmail(payloadDataTransferObject.getEmail());
+        assignedPayload.setPictureUrl(payloadDataTransferObject.getPictureLarge());
+        assignedPayload.setDob(payloadDataTransferObject.getDobDate().substring(0,10));
+        String isoCode = payloadDataTransferObject.getNationality();
+        assignedPayload.setNationality(helperFunction.translateIsoCode(isoCode));
+        return assignedPayload;
+    }
+
+    public String createFullNameDTO(PayloadDataTransferObject payloadDataTransferObject) {
+        String title = payloadDataTransferObject.getTitle();
+        String first = payloadDataTransferObject.getFirstName();
+        String last = payloadDataTransferObject.getLastName();
+        return String.join("", title, first, last);
+    }
+
+//    Method Three Functions
 //    Saved space for Get name via streaming model
 
 }
