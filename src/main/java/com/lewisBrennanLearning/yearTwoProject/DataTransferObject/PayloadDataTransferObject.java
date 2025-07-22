@@ -1,6 +1,5 @@
 package com.lewisBrennanLearning.yearTwoProject.DataTransferObject;
 
-import ch.qos.logback.core.util.MD5Util;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
@@ -358,7 +357,6 @@ public class PayloadDataTransferObject {
 
     @JsonProperty("dob")
     private void unpackDob(Map<String,Object> dob) {
-//        Consider if the date can use the shortener helper applied elsewhere
         setDobDate((String)dob.get("date"));
         setDobAge((Integer)dob.get("age"));
     }

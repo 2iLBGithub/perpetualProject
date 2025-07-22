@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
-@Document(collection = "parsed_payloads")
 public class ParsedPayload {
 
     @Id

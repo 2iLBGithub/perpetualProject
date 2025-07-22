@@ -6,29 +6,32 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lewisBrennanLearning.yearTwoProject.DataTransferObject.PayloadDataTransferObject;
 import com.lewisBrennanLearning.yearTwoProject.Model.InitialPayload;
-import com.lewisBrennanLearning.yearTwoProject.Repository.InitialPayloadRepository;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class PayloadInterpreter {
 
-    private final InitialPayloadRepository initialPayloadRepository;
+    private final MongoTemplate mongoTemplate;
     private final ObjectMapper objectMapperJSON = new ObjectMapper();
 
-    public PayloadInterpreter(InitialPayloadRepository initialPayloadRepository) {
-        this.initialPayloadRepository = initialPayloadRepository;
+    public PayloadInterpreter(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
     }
 
     public List<InitialPayload> findAllInitialPayloads() {
-        return initialPayloadRepository.findAll();
+        return mongoTemplate.findAll(InitialPayload.class, "initial_payloads");
     }
 
-    public InitialPayload selectFirstPayload () {
+    public InitialPayload selectRandomPayload() {
         List<InitialPayload> allInitialPayloads = findAllInitialPayloads();
-        return allInitialPayloads.get(0);
+        int allInitialPayloadsListSize = allInitialPayloads.size() - 1;
+        int randomEntryInitialPayloadsList = ThreadLocalRandom.current().nextInt(allInitialPayloadsListSize);
+        return allInitialPayloads.get(randomEntryInitialPayloadsList);
     }
 
     //    Currently unused but useful for debug
@@ -42,9 +45,9 @@ public class PayloadInterpreter {
 
     public PayloadDataTransferObject payloadDataTransferConversion (InitialPayload selectedPayload) throws JsonProcessingException {
         Map<String,Object> mappedInitialPayload = reMapInitialPayloadString(selectedPayload);
-        List<Map<String,Object>> mappedInitialPayloadResults = (List<Map<String,Object>>) mappedInitialPayload.get("results");
-        Map<String,Object> thing = mappedInitialPayloadResults.get(0);
+        List<Map<String,Object>> listedInitialPayloadResults = (List<Map<String,Object>>) mappedInitialPayload.get("results");
+        Map<String,Object> mappedInitialPayloadResults = listedInitialPayloadResults.get(0);
         PayloadDataTransferObject payloadDataTransferObject = new PayloadDataTransferObject();
-        return payloadDataTransferObject = objectMapperJSON.convertValue(thing, PayloadDataTransferObject.class);
+        return payloadDataTransferObject = objectMapperJSON.convertValue(mappedInitialPayloadResults, PayloadDataTransferObject.class);
     }
 }
