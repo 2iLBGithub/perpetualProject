@@ -28,7 +28,5 @@ public class InitialPayload {
         return initialPayloadJsonString;
     }
 
-    public void setInitialPayloadJsonString(String initialPayloadJsonString) {
-        this.initialPayloadJsonString = initialPayloadJsonString;
-    }
+    public void setInitialPayloadJsonString(String initialPayloadJsonString) { this.initialPayloadJsonString = initialPayloadJsonString; }
 }

@@ -67,13 +67,9 @@ public class PayloadDataTransferObject {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getLastName() { return lastName; }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
     public Integer getStreetNumber() {
         return streetNumber;
@@ -135,9 +131,7 @@ public class PayloadDataTransferObject {
         return coordinatesLongitude;
     }
 
-    public void setCoordinatesLongitude(String coordinatesLongitude) {
-        this.coordinatesLongitude = coordinatesLongitude;
-    }
+    public void setCoordinatesLongitude(String coordinatesLongitude) { this.coordinatesLongitude = coordinatesLongitude; }
 
     public String getTimezoneOffset() {
         return timezoneOffset;

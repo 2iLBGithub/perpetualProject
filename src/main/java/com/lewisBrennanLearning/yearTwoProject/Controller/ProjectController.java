@@ -16,6 +16,7 @@ public class ProjectController {
 
     private final RestTemplate restTemplateLocalDeclaration;
     private final PayloadService payloadService;
+
     public ProjectController(RestTemplate restTemplateFromConfig, PayloadService payloadService) {
         this.restTemplateLocalDeclaration = restTemplateFromConfig;
         this.payloadService = payloadService;
@@ -32,14 +33,14 @@ public class ProjectController {
         return responseMap;
     }
 
-    @PostMapping("/parseInitialDataMethodOne")
+    @PostMapping("/parseInitialDataMethodOneJsonNode")
     public ParsedPayload parseMethodOne() throws JsonProcessingException {
-        return payloadService.parseMethodOne();
+        return payloadService.parseMethodOneJsonNode();
     }
 
-    @PostMapping("/parseInitialDataMethodTwo")
+    @PostMapping("/parseInitialDataMethodTwoDtoPojo")
     public ParsedPayload parseMethodTwo() throws JsonProcessingException {
-        return payloadService.parseMethodTwo();
+        return payloadService.parseMethodTwoDtoPojo();
     }
 
 //    Keep until MS3

@@ -36,7 +36,7 @@ public class PayloadService {
     }
 
 //    JsonNode
-    public ParsedPayload parseMethodOne() throws JsonProcessingException {
+    public ParsedPayload parseMethodOneJsonNode () throws JsonProcessingException {
         InitialPayload selectedPayload = payloadInterpreter.selectRandomPayload();
         JsonNode jsonNodeSelectedPayload = payloadInterpreter.jsonNodeInitialPayloadString(selectedPayload);
         ParsedPayload parsedPayload = new ParsedPayload();
@@ -45,7 +45,7 @@ public class PayloadService {
     }
 
 //    POJO - DTO
-    public ParsedPayload parseMethodTwo() throws JsonProcessingException {
+    public ParsedPayload parseMethodTwoDtoPojo () throws JsonProcessingException {
         InitialPayload selectedPayload = payloadInterpreter.selectRandomPayload();
         PayloadDataTransferObject payloadDataTransferObject = payloadInterpreter.payloadDataTransferConversion(selectedPayload);
         ParsedPayload parsedPayload = new ParsedPayload();
