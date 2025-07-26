@@ -44,7 +44,7 @@ public class ProjectController {
         return payloadService.parseMethodTwoDtoPojo();
     }
 
-    @PostMapping("parseInitialDataMethodThreeStream")
+    @PostMapping("/parseInitialDataMethodThreeStream")
     public ParsedPayload parseMethodThreeStream() throws IOException {
         return payloadService.parseMethodThreeStream();
     }
