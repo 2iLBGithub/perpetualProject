@@ -1,5 +1,7 @@
 package com.lewisBrennanLearning.yearTwoProject.Interpreter;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,8 +11,10 @@ import com.lewisBrennanLearning.yearTwoProject.Model.InitialPayload;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
@@ -34,7 +38,6 @@ public class PayloadInterpreter {
         return allInitialPayloads.get(randomEntryInitialPayloadsList);
     }
 
-    //    Currently unused but useful for debug
     public Map<String,Object> reMapInitialPayloadString(InitialPayload firstInitialPayload) throws JsonProcessingException {
         return objectMapperJSON.readValue(firstInitialPayload.getInitialPayloadJsonString(), new TypeReference<Map<String,Object>>() {});
     }
@@ -50,4 +53,11 @@ public class PayloadInterpreter {
         PayloadDataTransferObject payloadDataTransferObject = new PayloadDataTransferObject();
         return payloadDataTransferObject = objectMapperJSON.convertValue(mappedInitialPayloadResults, PayloadDataTransferObject.class);
     }
+
+    public Optional<Map<String, Object>> getResultsMapFromInitialPayloadString(InitialPayload selectedPayload) throws JsonProcessingException {
+        Map<String,Object> remappedInitialPayload = reMapInitialPayloadString(selectedPayload);
+        List<Map<String,Object>> remappedInitialPayloadResults = (List<Map<String,Object>>) remappedInitialPayload.get("results");
+        return remappedInitialPayloadResults.stream().findFirst();
+    }
+
 }

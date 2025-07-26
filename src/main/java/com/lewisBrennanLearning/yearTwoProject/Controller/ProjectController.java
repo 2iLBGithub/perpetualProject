@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -34,13 +35,18 @@ public class ProjectController {
     }
 
     @PostMapping("/parseInitialDataMethodOneJsonNode")
-    public ParsedPayload parseMethodOne() throws JsonProcessingException {
+    public ParsedPayload parseMethodOneJsonNode() throws JsonProcessingException {
         return payloadService.parseMethodOneJsonNode();
     }
 
     @PostMapping("/parseInitialDataMethodTwoDtoPojo")
-    public ParsedPayload parseMethodTwo() throws JsonProcessingException {
+    public ParsedPayload parseMethodTwoDtoPojo() throws JsonProcessingException {
         return payloadService.parseMethodTwoDtoPojo();
+    }
+
+    @PostMapping("parseInitialDataMethodThreeStream")
+    public ParsedPayload parseMethodThreeStream() throws IOException {
+        return payloadService.parseMethodThreeStream();
     }
 
 //    Keep until MS3
