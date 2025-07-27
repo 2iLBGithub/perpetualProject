@@ -49,11 +49,4 @@ public class ProjectController {
         return payloadService.parseMethodThreeStream();
     }
 
-//    Keep until MS3
-//    @PostMapping("/parseInitialDataMethodOne")
-//    public String simpleTest() {
-//        String thing = "thing";
-//        parsedPayloadService.saveParsedPayload(thing);
-//        return thing;
-//    }
 }

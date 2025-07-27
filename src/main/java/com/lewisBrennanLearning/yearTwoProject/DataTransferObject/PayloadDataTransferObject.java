@@ -16,7 +16,7 @@ public class PayloadDataTransferObject {
     private String city;
     private String state;
     private String country;
-    private Integer postcode;
+    private String postcode;
     private String coordinatesLatitude;
     private String coordinatesLongitude;
     private String timezoneOffset;
@@ -111,11 +111,11 @@ public class PayloadDataTransferObject {
         this.country = country;
     }
 
-    public Integer getPostcode() {
+    public String getPostcode() {
         return postcode;
     }
 
-    public void setPostcode(Integer postcode) {
+    public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
 
@@ -318,8 +318,6 @@ public class PayloadDataTransferObject {
         setLastName(name.get("last"));
     }
 
-//    location function
-//    WORTH LOOKING INTO THIS ONE IN PARTICULAR - THE STRING CASTING AND THE STREET SETTER ARE INTERESTING
     @JsonProperty("location")
     @SuppressWarnings("unchecked")
     private void unpackLocation(Map<String,Object> location) {
@@ -329,7 +327,7 @@ public class PayloadDataTransferObject {
         setCity((String)location.get("city"));
         setState((String)location.get("state"));
         setCountry((String)location.get("country"));
-        setPostcode((Integer) location.get("postcode"));
+        setPostcode(location.get("postcode").toString());
         Map<String,Object> coordinates = (Map<String,Object>)location.get("coordinates");
         setCoordinatesLatitude((String)coordinates.get("latitude"));
         setCoordinatesLongitude((String)coordinates.get("longitude"));
