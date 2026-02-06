@@ -106,7 +106,6 @@ public class ParsedPayload {
     }
 
 //    Method One Functions
-
     public ParsedPayload assignValuesJsonNode(JsonNode jsonNodeSelectedPayload) {
         ParsedPayload assignedPayload = new ParsedPayload();
         HelperFunction helperFunction = new HelperFunction();
