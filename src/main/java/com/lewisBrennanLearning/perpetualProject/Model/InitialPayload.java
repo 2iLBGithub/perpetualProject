@@ -1,4 +1,4 @@
-package com.lewisBrennanLearning.yearTwoProject.Model;
+package com.lewisBrennanLearning.perpetualProject.Model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;

@@ -1,13 +1,13 @@
-package com.lewisBrennanLearning.yearTwoProject;
+package com.lewisBrennanLearning.perpetualProject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class YearTwoProjectApplication {
+public class PerpetualProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(YearTwoProjectApplication.class, args);
+		SpringApplication.run(PerpetualProjectApplication.class, args);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.lewisBrennanLearning.yearTwoProject.Configuration;
+package com.lewisBrennanLearning.perpetualProject.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

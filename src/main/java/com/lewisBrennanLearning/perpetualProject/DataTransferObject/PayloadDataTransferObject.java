@@ -1,4 +1,4 @@
-package com.lewisBrennanLearning.yearTwoProject.DataTransferObject;
+package com.lewisBrennanLearning.perpetualProject.DataTransferObject;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,17 +1,12 @@
-package com.lewisBrennanLearning.yearTwoProject.Model;
+package com.lewisBrennanLearning.perpetualProject.Model;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.lewisBrennanLearning.yearTwoProject.DataTransferObject.PayloadDataTransferObject;
-import com.lewisBrennanLearning.yearTwoProject.Helper.HelperFunction;
+import com.lewisBrennanLearning.perpetualProject.DataTransferObject.PayloadDataTransferObject;
+import com.lewisBrennanLearning.perpetualProject.Helper.HelperFunction;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -106,7 +101,6 @@ public class ParsedPayload {
     }
 
 //    Method One Functions
-
     public ParsedPayload assignValuesJsonNode(JsonNode jsonNodeSelectedPayload) {
         ParsedPayload assignedPayload = new ParsedPayload();
         HelperFunction helperFunction = new HelperFunction();
