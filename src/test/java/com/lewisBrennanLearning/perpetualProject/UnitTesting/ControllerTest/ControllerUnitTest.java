@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -59,15 +60,33 @@ public class ControllerUnitTest {
     @Test
     void parseInitialDataMethodOneJsonNode_UnitTest() throws Exception {
         ParsedPayload stubPayload = new ParsedPayload();
-        stubPayload.setId(new ObjectId("TEST_ID"));
+        stubPayload.setId(new ObjectId("507f1f77bcf86cd799439011"));
+        stubPayload.setUuid(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"));
         stubPayload.setFullName("TEST_NAME");
+        stubPayload.setGender("TEST_GENDER");
+        stubPayload.setEmail("TEST_EMAIL");
+        stubPayload.setPictureUrl("TEST_PICTURE-URL");
+        stubPayload.setDob("TEST_DOB");
+        stubPayload.setNationality("TEST_NATIONALITY");
 
         when(payloadService.parseMethodOneJsonNode()).thenReturn(stubPayload);
 
         mockMvc.perform(post("/parseInitialDataMethodOneJsonNode"))
+                .andDo(org.springframework.test.web.servlet.result.MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/parseInitialDataMethodOneJsonNode"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith("application/json"))
-                .andExpect(jsonPath("$.fullName").value("TEST_NAME"));
+                .andExpect(jsonPath("$.id.timestamp").isNumber())
+                .andExpect(jsonPath("$.id.date").isString())
+                .andExpect(jsonPath("$.uuid").value("123e4567-e89b-12d3-a456-426614174000"))
+                .andExpect(jsonPath("$.fullName").value("TEST_NAME"))
+                .andExpect(jsonPath("$.gender").value("TEST_GENDER"))
+                .andExpect(jsonPath("$.email").value("TEST_EMAIL"))
+                .andExpect(jsonPath("$.pictureUrl").value("TEST_PICTURE-URL"))
+                .andExpect(jsonPath("$.dob").value("TEST_DOB"))
+                .andExpect(jsonPath("$.nationality").value("TEST_NATIONALITY"));
 
         verify(payloadService, times(1)).parseMethodOneJsonNode();
         verifyNoMoreInteractions(payloadService);
